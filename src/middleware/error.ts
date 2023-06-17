@@ -28,7 +28,7 @@ export const errorHandler = (
     res.status(400);
     res.statusMessage = 'Bad Request';
     res.send({
-      status: 'res.status',
+      status: '400 Bad Request',
     });
     return;
   }
