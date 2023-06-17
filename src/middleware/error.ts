@@ -11,14 +11,14 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ) => {
-  debug('Executed');
+  debug('Error Middleware');
 
   if (error instanceof HttpError) {
     console.error(error.status, error.statusMessage, error.message);
     res.status(error.status);
     res.statusMessage = error.message;
     res.send({
-      status: error.status + ' ' + error.statusMessage,
+      status: error.status,
     });
     return;
   }
@@ -28,7 +28,7 @@ export const errorHandler = (
     res.status(400);
     res.statusMessage = 'Bad Request';
     res.send({
-      status: '400 Bad request',
+      status: 'res.status',
     });
     return;
   }
@@ -38,7 +38,7 @@ export const errorHandler = (
     res.status(406);
     res.statusMessage = 'Not accepted';
     res.send({
-      status: '406 Not accepted',
+      status: 'res.status',
     });
     return;
   }
