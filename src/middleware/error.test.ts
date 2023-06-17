@@ -52,10 +52,7 @@ describe('Given the handleError middleware', () => {
       expect(res.status).toHaveBeenCalled();
       expect(res.send).toHaveBeenCalled();
       expect(next).not.toHaveBeenCalled();
-      expect(mockConsoleError).toHaveBeenCalledWith(
-        '400 Bad Request',
-        'Validation failed'
-      );
+      expect(error).toHaveBeenCalledWith('400 Bad Request', error.message);
     });
 
     test('When it is instantiate with a mongo.MongoServerError, then it should set a status, a statusMessage and an error object', () => {
