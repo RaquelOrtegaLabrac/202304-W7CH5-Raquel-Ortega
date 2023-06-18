@@ -24,7 +24,7 @@ export const errorHandler = (
   }
 
   if (error instanceof mongoose.Error.ValidationError) {
-    console.log('400 Bad request', error.message);
+    console.error('400 Bad Request', error.message);
     res.status(400);
     res.statusMessage = 'Bad Request';
     res.send({
