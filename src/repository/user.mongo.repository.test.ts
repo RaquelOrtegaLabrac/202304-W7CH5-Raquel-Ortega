@@ -1,7 +1,7 @@
-import { User } from '../entities/user';
-import { HttpError } from '../types/http.error';
-import { UserModel } from './user.mongo.model';
-import { UserRepo } from './user.mongo.repository';
+import { User } from '../entities/user.js';
+import { HttpError } from '../types/http.error.js';
+import { UserModel } from './user.mongo.model.js';
+import { UserRepo } from './user.mongo.repository.js';
 
 jest.mock('./user.mongo.model.js');
 
