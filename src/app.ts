@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
+import { userRouter } from './routers/user.router';
 
 export const app = express();
 
@@ -22,5 +23,4 @@ app.use((_req, _res, next) => {
   next();
 });
 
-// Para cuando exista userRouter
-// app.use('/user', userRouter);
+app.use('/user', userRouter);
