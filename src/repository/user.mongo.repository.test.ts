@@ -72,6 +72,69 @@ describe('Given a UserRepo class', () => {
     });
   });
 
+  describe('When it is instantiated and update method is called', () => {
+    test('Then UserModel.findByIdAndUpdate should have been called with the correct arguments', async () => {
+      const exec = jest.fn().mockResolvedValue([]);
+      const mockUser = {
+        id: '1',
+        userName: 'Pablo',
+        email: 'pablo@sample.com',
+        password: '1234',
+      };
+      UserModel.findByIdAndUpdate = jest.fn().mockReturnValueOnce({
+        exec,
+      });
+      const result = await repo.update(mockUser.id, {
+        userName: mockUser.userName,
+        email: mockUser.email,
+        password: mockUser.password,
+      });
+
+      expect(UserModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        mockUser.id,
+        {
+          userName: mockUser.userName,
+          email: mockUser.email,
+          password: mockUser.password,
+        },
+        { new: true }
+      );
+      expect(result).not.toEqual(mockUser);
+    });
+
+    test('Then UserModel.findByIdAndUpdate should throw HttpError when result is null', async () => {
+      const mockUser = {
+        id: '1',
+        userName: 'Pablo',
+        email: 'pablo@sample.com',
+        password: '1234',
+      };
+      const exec = jest.fn().mockResolvedValueOnce(null);
+      UserModel.findByIdAndUpdate = jest.fn().mockReturnValueOnce({
+        exec,
+      });
+
+      await expect(
+        repo.update(mockUser.id, {
+          userName: mockUser.userName,
+          email: mockUser.email,
+          password: mockUser.password,
+        })
+      ).rejects.toThrow(HttpError);
+
+      expect(UserModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        mockUser.id,
+        {
+          userName: mockUser.userName,
+          email: mockUser.email,
+          password: mockUser.password,
+        },
+        { new: true }
+      );
+      expect(exec).toHaveBeenCalled();
+    });
+  });
+
   describe('When it is instantiated and delete method is called', () => {
     test('Then UserModel.delete should be used', async () => {
       const mockId = '6';
