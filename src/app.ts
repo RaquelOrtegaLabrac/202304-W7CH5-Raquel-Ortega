@@ -2,7 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import createDebug from 'debug';
-import { userRouter } from './routers/user.router';
+import { userRouter } from './routers/user.router.js';
+import { errorHandler } from './middleware/error.js';
 
 export const app = express();
 
@@ -17,10 +18,12 @@ const corsOptions = {
 app.use(morgan('dev'));
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.static('public'));
 
-app.use((_req, _res, next) => {
-  debug('');
-  next();
+app.get('/', (_req, res) => {
+  res.send('API Rest Info');
 });
 
 app.use('/user', userRouter);
+
+app.use(errorHandler);
